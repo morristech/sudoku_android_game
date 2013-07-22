@@ -2,9 +2,13 @@ package com.example.sudoku;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 public class Game extends Activity {
@@ -25,7 +29,6 @@ public class Game extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
 		Log.d(TAG, "onCreate");
 		int diff = getIntent().getIntExtra(KEY_DIFFICULTY, DIFFICULTY_EASY);
 		puzzle = getPuzzle(diff);
@@ -33,6 +36,35 @@ public class Game extends Activity {
 		puzzleView = new PuzzleView(this);
 		setContentView(puzzleView);
 		puzzleView.requestFocus();
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.main, menu);
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.action_settings:
+				startActivity(new Intent(this, Prefs.class));
+				return true;
+		}
+		return false;
+	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		Music.play(this, R.raw.game);
+	}
+	@Override
+	protected void onPause() {
+		super.onPause();
+		Music.stop(this);
 	}
 	
 	protected void showKeypadOrError(int x, int y) {

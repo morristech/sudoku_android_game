@@ -84,18 +84,20 @@ public class PuzzleView extends View {
 				canvas.drawText(this.game.getTileString(i, j), i * width + x, j * height + y, foreground);
 			}
 		}
-		int c[] = { 
-				getResources().getColor(R.color.puzzle_hint_0), 
-				getResources().getColor(R.color.puzzle_hint_1), 
-				getResources().getColor(R.color.puzzle_hint_2), 
-		};
-		for (int i = 0; i < 9; i++) {
-			for (int j = 0; j < 9; j++) {
-				int movesleft = 9 - game.getUsedTiles(i, j).length;
-				if (movesleft < c.length) {
-					getRect(i, j, r);
-					hint_or_selected.setColor(c[movesleft]);
-					canvas.drawRect(r, hint_or_selected);
+		if (Prefs.getHints(getContext())) {
+			int c[] = { 
+					getResources().getColor(R.color.puzzle_hint_0), 
+					getResources().getColor(R.color.puzzle_hint_1), 
+					getResources().getColor(R.color.puzzle_hint_2), 
+			};
+			for (int i = 0; i < 9; i++) {
+				for (int j = 0; j < 9; j++) {
+					int movesleft = 9 - game.getUsedTiles(i, j).length;
+					if (movesleft < c.length) {
+						getRect(i, j, r);
+						hint_or_selected.setColor(c[movesleft]);
+						canvas.drawRect(r, hint_or_selected);
+					}
 				}
 			}
 		}
