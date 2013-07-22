@@ -12,8 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-public class MainActivity extends Activity implements OnClickListener {
-
+public class MainActivity extends Activity implements OnClickListener {		
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -81,7 +81,13 @@ public class MainActivity extends Activity implements OnClickListener {
 			})
 			.show();
 	}
+	
 	private void startGame(int i) {
+		Log.d(TAG, "clicked on " + i);
+		Intent intent = new Intent(this, Game.class);
+		intent.putExtra(Game.KEY_DIFFICULTY, i);
+		startActivity(intent);
+
 		if(i == 0) {
 			Log.d(TAG, "Easy");
 		} else if( i == 1 ) {
